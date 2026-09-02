@@ -1,6 +1,6 @@
 # Delivery flow
 
-Run consequential work as a phase graph. Keep each role's objective and context distinct.
+Run the work as a phase graph. Keep each role's objective and context distinct.
 
 ```text
 EXPLORE -> PLAN -> WORK -> CRITIQUE -> PROMOTE

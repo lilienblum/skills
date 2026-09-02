@@ -1,6 +1,6 @@
 # Explore
 
-Ground consequential work before committing to a plan. Return evidence, constraints, unresolved facts, and observable acceptance criteria, not an implementation proposal.
+Ground the work before committing to a plan. Return evidence, constraints, unresolved facts, and observable acceptance criteria, not an implementation proposal.
 
 ## Context
 

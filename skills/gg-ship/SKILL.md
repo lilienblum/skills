@@ -23,7 +23,7 @@ Take a human-assigned implementation or operational task from request to verifie
 1. Frame the goal, boundaries, artifact, and acceptance criteria from the task and environment.
 2. Match one execution path and read it before planning:
    - Dozens to hundreds of units, long-running work, or a worker fleet: `internal/flow.md` plus `internal/fleet.md`.
-   - Other consequential or multi-step work: `internal/flow.md`.
+   - Other multi-step work (phased path): `internal/flow.md`.
    - Small bounded task with material effects: inspect and plan inline, apply `gg-guardrails` to the plan, execute directly, review the exact result with `gg-review` from an isolated context, repair within the review-cycle budget, then promote with `gg-write`.
    - Trivial task: execute directly, run the direct check, apply `gg-guardrails`, then promote with `gg-write`. A task is trivial only when it is a localized mechanical edit, such as a typo, formatting, or comment change, with no runtime, data, security, permission, dependency, compatibility, or operational effect. When classification is uncertain, use the reviewed small-task path.
 3. Load only the public skills and internal files named by the selected path.
