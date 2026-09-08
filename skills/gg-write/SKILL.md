@@ -18,6 +18,8 @@ Format the agent-facing and user-facing artifacts produced by `gg-ship` and `gg-
 
 Do not include hidden reasoning, routine progress, worker-by-worker narration, filler, boilerplate, or invented certainty.
 
+The user message is review feedback or a completion receipt. Records used to hand work between agents are not user-facing.
+
 ## Agent briefs
 
 A worker brief must stand alone. Include only:

@@ -52,24 +52,12 @@ After all lenses finish:
 
 If a blocker makes the approach unusable, stop looking for low-impact nits. Still check for security defects, ownership violations, and portions that can be accepted independently.
 
-Apply `gg-write` to the final feedback.
+## Record
 
-## Finding format
+Keep a compact record for the next agent or phase: verdict, locator, revision, and each finding's kind, confidence, lens, location, evidence, trigger, impact, and correction.
 
-```yaml
-verdict: PASS | NEEDS_CHANGES | INCONCLUSIVE
-artifact:
-  locator: <exact location>
-  revision: <immutable hash, digest, or object ID>
-findings:
-  - kind: blocker | follow-up | observation
-    confidence: high | medium | low
-    lens: correctness | fidelity | standards | simplicity
-    location: <file, line, symbol, section, or element>
-    evidence: <observed behavior or source>
-    trigger: <conditions that make it reachable>
-    impact: <concrete consequence>
-    correction: <minimal direction, not an implementation>
-```
+Verdict is `PASS`, `NEEDS_CHANGES`, or `INCONCLUSIVE`. Finding kind is `blocker`, `follow-up`, or `observation`. Confidence is `high`, `medium`, or `low`. Lens is `correctness`, `fidelity`, `standards`, or `simplicity`.
 
 Use `NEEDS_CHANGES` for any blocker. A follow-up must be safe to defer without making the current artifact incorrect. An observation requires no action. Use `PASS` when no blocker remains. A changed revision requires a new review.
+
+Apply `gg-write` to the final feedback.

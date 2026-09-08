@@ -17,16 +17,13 @@ Receive only the goal, current environment, known constraints, and available evi
 
 ## Exploration brief
 
-```yaml
-outcome: <one sentence>
-non_goals: [<explicit exclusions>]
-constraints: [<observed boundary>]
-decisions:
-  - question: <material fork>
-    answer: <selected behavior>
-    basis: evidence | convention | experiment | reversible-default
-acceptance: [<observable criterion>]
-user_gates: [<irreducible choice, recommendation, and default>]
+```text
+OUTCOME      one sentence
+NON_GOALS    explicit exclusions
+CONSTRAINTS  observed boundaries
+DECISIONS    question, answer, basis (evidence | convention | experiment | reversible-default)
+ACCEPTANCE   observable criteria
+USER_GATES   irreducible choice, recommendation, and default
 ```
 
 ## Transition

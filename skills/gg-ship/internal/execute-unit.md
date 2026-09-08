@@ -1,6 +1,6 @@
 # Execute unit
 
-Complete exactly one bounded unit. Return an artifact and a structured receipt, not a conversation.
+Complete exactly one bounded unit. Return an artifact and a receipt, not a conversation.
 
 ## Brief gate
 
@@ -30,22 +30,16 @@ If a missing field prevents safe execution, return `blocked`. Do not ask the use
 
 ## Receipt
 
-```yaml
-status: ready | failed | blocked
-unit_id: <brief identifier>
-artifact:
-  locator: <branch, commit, path, URL, or object ID>
-  revision: <exact hash or version when available>
-changed:
-  - <path or object>
-checks:
-  - command: <exact command or procedure>
-    result: pass | fail | not-run
-    evidence: <output or artifact pointer>
-retries: <count>
-deviations:
-  - <acceptance deviation, or none>
-blocker: <specific blocker and exhausted alternatives, or none>
+```text
+STATUS       ready | failed | blocked
+UNIT_ID      brief identifier
+LOCATOR      branch, commit, path, URL, or object ID
+REVISION     exact hash or version when available
+CHANGED      paths or objects
+CHECKS       command, result (pass | fail | not-run), evidence
+RETRIES      count
+DEVIATIONS   acceptance deviations, or none
+BLOCKER      specific blocker and exhausted alternatives, or none
 ```
 
 `ready` requires an externalized artifact and passing required local checks. The caller decides whether the artifact is accepted.
