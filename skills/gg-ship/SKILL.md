@@ -14,7 +14,7 @@ Take a human-assigned implementation or operational task from request to verifie
 
 - Preserve the requested outcome and scope.
 - Resolve reversible ambiguity from evidence, experiments, conventions, or a safe default.
-- Keep workers independent. They receive bounded briefs, not the conversation.
+- Keep workers independent. They receive bounded briefs, not the conversation. Spawn each work unit and critique on a host isolated worker when the host can spawn one; otherwise run a distinct pass.
 - Trust artifacts and checks, not worker summaries.
 - Do not require user attention for routine progress or recoverable failures. Follow host-required status and approval mechanisms without turning them into conversational gates.
 
@@ -25,7 +25,7 @@ Take a human-assigned implementation or operational task from request to verifie
    - Dozens to hundreds of units, long-running work, or a worker fleet: `internal/flow.md` plus `internal/fleet.md`.
    - Other multi-step work (phased path): `internal/flow.md`.
    - Small bounded task with material effects: inspect and plan inline, apply `gg-guardrails` to the plan, execute directly, review the exact result with `gg-review` from an isolated context, repair within the review-cycle budget, then promote with `gg-write`.
-   - Trivial task: execute directly, run the direct check, apply `gg-guardrails`, then promote with `gg-write`. A task is trivial only when it is a localized mechanical edit, such as a typo, formatting, or comment change, with no runtime, data, security, permission, dependency, compatibility, or operational effect. When classification is uncertain, use the reviewed small-task path.
+   - Trivial task: execute directly, run the direct check, apply `gg-guardrails`, then promote with `gg-write`. A task is trivial when the edit is localized and has no runtime, data, security, permission, dependency, compatibility, or operational effect. Classify from a short inspection when unsure; use the reviewed small-task path only when a material effect is present.
 3. Load only the public skills and internal files named by the selected path.
 4. Follow outcome-based transitions through a current artifact and independent proof. Repair failed gates without involving the user when a safe route remains.
 5. Apply `gg-write` where named. Deliver the final user result only after the completion gate passes or a genuine user gate blocks all useful work.

@@ -22,6 +22,6 @@ Load the current phase file, any selected route overlay, and only the dependenci
 - `critique.md` independently judges the exact integrated revision.
 - `promote.md` makes the accepted result visible on authorized destinations.
 
-Use separate agents when available. Otherwise run distinct passes and do not let a phase judge its own output.
+Spawn `WORK` units and `CRITIQUE` per the `gg-ship` contract. A phase must not judge its own output.
 
 Follow the outcome rules in the current phase's `Transition` section. The main agent owns every transition and the integrated artifact. A phase cannot waive another phase's entry gate. Any changed artifact revision invalidates its critique receipt.

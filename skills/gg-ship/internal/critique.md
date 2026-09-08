@@ -8,7 +8,7 @@ Receive only the goal, acceptance criteria, artifact locator and immutable ident
 
 ## Procedure
 
-1. Apply `gg-review` from fresh context; it owns the shared `gg-guardrails` pass.
+1. Apply `gg-review` from a host isolated worker per the `gg-ship` contract. It owns the shared `gg-guardrails` pass.
 2. Verify every material finding against the current artifact.
 3. Classify each finding by its cause rather than sending every failure back to implementation.
 

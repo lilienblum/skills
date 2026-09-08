@@ -1,6 +1,6 @@
 ---
 name: gg-review
-description: "Before consequential work ships, challenge the artifact, verify the evidence, and call blockers plainly."
+description: "Review a named diff, branch, PR, change request, or design. Challenge the artifact, verify the evidence, and call blockers plainly."
 license: MIT
 ---
 

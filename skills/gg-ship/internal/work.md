@@ -14,7 +14,7 @@ Receive the validated graph, ready nodes, integration state, acceptance criteria
 4. Record artifacts and receipts immediately and integrate in dependency order.
 5. Classify failures before retrying or changing phases.
 
-Use `execute-unit.md` for delegated nodes.
+Use `execute-unit.md` for delegated nodes. Dispatch each delegated node as a host isolated worker per the `gg-ship` contract.
 
 ## Transition
 
