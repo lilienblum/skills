@@ -1,38 +1,13 @@
-# Fleet route
+# Fleet execution
 
-Add this overlay to `flow.md` for dozens to hundreds of work units, long-running work, or a worker fleet coordinated by one main agent.
+Use for many independent units that benefit from a rolling worker pool. A long sequential task needs a checkpoint, not this machinery.
 
-## Control plane
+Keep a durable manifest of the goal, acceptance criteria, settled decisions, and each unit's dependencies, owner, state, retries, artifact identity, and checks. Include the integrated review verdict, consumed repair cycles, and remaining blockers. Use [execute-unit.md](execute-unit.md) for briefs and results.
 
-The main agent keeps the full task and a compact durable manifest:
+Partition work into independently writable and verifiable units. Dispatch ready units within capacity, integrate results in dependency order, and refill the pool on completion. Leave enough budget for integration, review, and delivery; preserve resumable state when stopping.
 
-```text
-original goal and scope
-acceptance criteria
-settled decisions and user gates
-current phase and transition reason
-unit ID, dependencies, owner, state, and retry count
-artifact locator and immutable revision
-review mode, reviewer identifier when available, and review and verification verdicts for that revision
-```
+For repeated transformations, validate a representative pilot before scaling out. Choose a capable worker within host policy; use cheaper tiers for matching units only when the pilot demonstrates they can do the work. A pilot is not required for unrelated tasks merely because they run in parallel.
 
-Workers receive only their unit brief. They do not receive the conversation or communicate with siblings.
+The integrated result still needs `gg-review`. Add unit-level review before integration only when a specific risk would be costly or unsafe to defer. Reuse applicable evidence rather than repeating the same full review at both levels.
 
-## Plan additions
-
-Partition the work into independently writable and verifiable nodes. Eliminate shared writes before adding coordination. Apply the `gg-write` agent-brief contract to every node.
-
-## Work additions
-
-After the representative pilot in `work.md` passes, route matching nodes to the cheapest capable tier with the smallest useful context:
-
-- Cheap for search, extraction, inventory, classification, formatting, and known checks.
-- Worker for bounded implementation, migrations, debugging, and test construction.
-- Judgment for architecture, ambiguous tradeoffs, decomposition, and synthesis.
-- Verifier for fresh-context review and behavioral proof.
-
-Dispatch ready nodes through a rolling window and refill capacity on completion. Stop spawning near the execution budget and keep the manifest resumable. A cheaper tier escalates only after a capability failure, not a transient infrastructure failure. Never hard-code provider or model names.
-
-## Critique and promotion additions
-
-Run `gg-review` on consequential nodes as well as the integrated result. Use `gg-write` for large-run delivery.
+Report verified totals and material failed, abandoned, or blocked exceptions, not a worker-by-worker narrative.

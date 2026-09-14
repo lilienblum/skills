@@ -1,11 +1,10 @@
 # gg stack
 
-Hand off the work. Come back to proof.
+Ship substantial changes with review and proof.
 
-- `gg-ship` — plan it, do it, review it, fix it, prove it.
+- `gg-ship` — own substantial or high-risk build and ops work through verified delivery.
 - `gg-review` — challenge the artifact and call blockers plainly.
 - `gg-guardrails` — cut needless complexity, hidden risk, and flimsy evidence.
-- `gg-write` — tight briefs, sharp findings, no-drama receipts.
 
 Built on the open [Agent Skills](https://agentskills.io) format.
 
@@ -15,39 +14,25 @@ Built on the open [Agent Skills](https://agentskills.io) format.
 npx skills add lilienblum/skills
 ```
 
-## How they work
+## When to use gg-ship
 
-The first step frames the prompt, or executes it if trivial. Uncertain is small. Phase files and workers run only on the phased path. `gg-review` runs on small and phased. `*` is a subagent when the host can spawn one; otherwise a distinct pass on the main agent.
+Use `gg-ship` for major features spanning components, migrations, broad refactors, and long-running operational work. A high-risk change can qualify even when the edit is small. Multiple steps alone do not make a task substantial.
+
+Handle light, low-risk fixes and routine edits directly with an appropriate check. They do not need this workflow or its review gate.
+
+## How gg-ship works
+
+The main agent owns the plan, implementation, integration, and delivery. An ordered plan suffices for sequential work. Delegate when independent work can usefully run in parallel or a concrete risk needs specialist attention.
 
 ```mermaid
-flowchart TB
-  prompt([prompt]) --> frame["frame, or execute if trivial"]
-  frame -->|phased| explore["explore*"]
-  frame -->|small| inline["plan inline"]
-  frame -->|trivial| write["gg-write"]
-
-  explore --> plan["plan*"] --> work["work*"] --> critique["critique*"]
-  critique -->|PASS| promote["promote*"]
-  promote --> write
-
-  critique -.->|repair| work
-  critique -.->|replan| plan
-  critique -.->|re-explore| explore
-  work -.->|spawn| workers["1 worker per ready node*"]
-  critique -.->|spawn| creview["gg-review*"]
-
-  inline --> sexec["execute"]
-  sexec --> sreview["gg-review*"]
-  sreview -->|PASS| write
-  sreview -.->|repair| sexec
-
-  plan -.-> guard["gg-guardrails"]
-  inline -.-> guard
-  workers -.-> guard
-  creview -.-> guard
-  sreview -.-> guard
-  creview -.->|spawn| lenses["correctness, fidelity, standards, simplicity*"]
-  sreview -.->|spawn| lenses
+flowchart LR
+  understand["Understand"] --> plan["Plan"] --> execute["Execute"]
+  execute --> review["gg-review"] -->|PASS| deliver["Deliver"]
+  review -->|Repair within budget| execute
 ```
 
-`work` fans out after a representative pilot. Large runs add a rolling fleet on the phased path. `gg-review` and `gg-write` also work on their own. The phase files live in `gg-ship`, not as extra skills.
+One independent reviewer covers correctness, requirements, conventions, and simplicity. If the host cannot provide an independent reviewer, use and disclose a separate self-review. Repairs require an updated verdict, with checks repeated for affected behavior and earlier evidence reused only when it still applies.
+
+`gg-guardrails` supplies shared criteria during planning and review without adding another verdict. `gg-review` and `gg-guardrails` also work on their own. Worker briefs and delivery formatting live with the workflows that use them.
+
+Many independent units can add a rolling worker pool with a resumable manifest. Repeated transformations get a representative pilot before scaling. Long sequential work only needs a checkpoint.

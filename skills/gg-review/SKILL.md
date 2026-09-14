@@ -6,58 +6,29 @@ license: MIT
 
 # GG Review
 
-*Challenge consequential work before it is accepted.*
+Review the named artifact against its intended behavior. Stay read-only unless the user requests edits or published comments.
 
-Challenge a diff, branch, change request, file set, or design. Report evidence-based findings. Keep the review read-only unless the user explicitly requests edits or published comments.
+## Establish the target
 
-## Scope
+Identify the artifact and immutable revision or digest, acceptance source, relevant repository rules, and comparison base. If the target or intent cannot be established, return `INCONCLUSIVE`.
 
-Record:
+## Review
 
-- the exact artifact and immutable revision or digest;
-- the intended behavior and acceptance source;
-- relevant repository standards and surrounding context;
-- the comparison base, when reviewing a change.
+One reviewer covers the following concerns in a single pass. Add a specialist only when a concrete risk or independently reviewable area warrants it; do not create one worker per concern.
 
-If the target or intent cannot be established, return `INCONCLUSIVE`.
+- **Correctness:** trace reachable behavior, invariants, failure modes, security boundaries, and evidence.
+- **Fidelity:** compare requirements with behavior, including omissions and unrequested scope.
+- **Standards:** apply documented conventions without duplicating deterministic checks.
+- **Simplicity:** identify removable machinery, existing owners, and unjustified continuing cost.
 
-## Shared guardrails
+Use `gg-guardrails` as shared criteria during this pass, not as another review or separate verdict. Verify material claims against the source and direct evidence. A reachable failure or concrete cost is required for a finding. Exclude unrelated pre-existing issues, taste, and unsupported speculation; merge duplicates and rank by impact.
 
-Apply `gg-guardrails` to establish the exact current artifact, comparison point, changed runtime path, sensitive boundaries, contracts, rollout, credible evidence, and whether every meaningful new part earns its cost.
+After repairs, assess the new delta and affected behavior. Reuse earlier findings and evidence only after checking that the relevant code, dependencies, configuration, and environment remain applicable. Expand checks when impact is uncertain. Record a verdict for the current revision; never relabel an old verdict as current.
 
-Do not report a pre-existing problem unless the change makes it reachable, makes it worse, or makes it material to acceptance.
+## Feedback
 
-A `FAIL` guardrail result becomes a blocker. An `INCONCLUSIVE` result prevents `PASS` when it covers a material claim.
+Return `PASS` when no blocker or material evidence gap remains, `NEEDS_CHANGES` for confirmed blockers, or `INCONCLUSIVE` when missing evidence prevents judgment. Report confirmed findings even when other material claims remain inconclusive. A deferred finding must be safe without making the current result incorrect.
 
-## Independent lenses
+Lead with actionable findings ordered by consequence. Include location, trigger, observed failure or concrete cost, evidence, and the smallest corrective direction. Preserve exact commands and identifiers. Record the reviewed artifact, revision, and verdict; disclose self-review when the reviewer also implemented the change. Do not claim independence from a separate pass in the same conversation.
 
-Run the lenses in isolated contexts. Parallelize when available; otherwise clear prior conclusions between passes.
-
-1. **Correctness.** Trace behavior, invariants, edge cases, failure modes, security boundaries, and evidence.
-2. **Fidelity.** Compare every requirement with the artifact. Find omissions, incorrect behavior, and unrequested scope.
-3. **Standards.** Apply documented repository conventions. Do not duplicate checks already enforced deterministically.
-4. **Simplicity.** Find removable machinery, existing owners, speculative flexibility, and unjustified operational cost.
-
-Each lens cites exact evidence. A possibility without a reachable failure or concrete cost is not a finding.
-
-## Lead judgment
-
-After all lenses finish:
-
-1. Verify findings against the artifact.
-2. Merge duplicates across lenses.
-3. Dismiss taste, unsupported speculation, and context errors.
-4. Rank the remaining findings by impact.
-5. Recommend the smallest corrective direction.
-
-If a blocker makes the approach unusable, stop looking for low-impact nits. Still check for security defects, ownership violations, and portions that can be accepted independently.
-
-## Record
-
-Keep a compact record for the next agent or phase: verdict, locator, revision, and each finding's kind, confidence, lens, location, evidence, trigger, impact, and correction.
-
-Verdict is `PASS`, `NEEDS_CHANGES`, or `INCONCLUSIVE`. Finding kind is `blocker`, `follow-up`, or `observation`. Confidence is `high`, `medium`, or `low`. Lens is `correctness`, `fidelity`, `standards`, or `simplicity`.
-
-Use `NEEDS_CHANGES` for any blocker. A follow-up must be safe to defer without making the current artifact incorrect. An observation requires no action. Use `PASS` when no blocker remains. A changed revision requires a new review.
-
-Apply `gg-write` to the final feedback.
+If no material finding exists, say so plainly and name the review scope and checks. Omit empty sections, routine praise, diff narration, and worker bookkeeping.

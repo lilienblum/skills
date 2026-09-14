@@ -10,6 +10,8 @@ license: MIT
 
 Apply these guardrails while planning, executing, reviewing, or accepting a consequential change. Judge the proposed system change, not merely the edited lines or an agent's account of them.
 
+When used inside another workflow, apply the relevant criteria in that work and include material findings in its result. Do not add a separate pass, report, or verdict. Use the result format below only for a standalone guardrail assessment.
+
 ## Bind the target
 
 During planning, bind the requested behavior, comparison point, and exact proposal. During execution, review, or acceptance, also bind the artifact locator and immutable revision or digest. A branch, tag, URL, or version label is a locator, not proof of identity.
@@ -67,7 +69,9 @@ Prefer evidence that exercises the changed behavior: generated artifacts, provid
 
 Green checks prove only the paths they exercise. Compilation, snapshots, and object-construction tests are not substitutes for active-path evidence. Missing automation blocks only when a material correctness, security, compatibility, or operational claim cannot otherwise be established.
 
-Work against the exact current target. Reject stale receipts, cached substitutes, and worker self-reports. A new artifact revision invalidates prior evidence.
+Confirm that checks can detect the failure they claim to exclude. For absence checks, use a known matching case when practical; derive expected results independently of the implementation.
+
+Work against the exact current target. Worker self-reports are not proof. After a revision changes, inspect the delta and rerun affected checks. Retain prior evidence only when the relevant code, dependencies, configuration, and environment remain applicable, and record that basis. When impact is uncertain, expand verification. A prior verdict does not automatically apply to a new revision.
 
 ## Result
 
