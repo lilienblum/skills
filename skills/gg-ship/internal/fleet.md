@@ -1,8 +1,8 @@
 # Fleet execution
 
-Use for many independent units that benefit from a rolling worker pool. A long sequential task needs a checkpoint, not this machinery.
+Use for many independent units that benefit from a rolling worker pool. A long sequential task needs only the Goal and a compact checkpoint, not this machinery.
 
-Keep a durable manifest of the goal, acceptance criteria, settled decisions, and each unit's dependencies, owner, state, retries, artifact identity, and checks. Include the integrated review verdict, consumed repair cycles, and remaining blockers. Use [execute-unit.md](execute-unit.md) for briefs and results.
+Keep a durable execution manifest tied to the Goal, with settled decisions and each unit's dependencies, owner, state, retries, artifact identity, and checks. Include the integrated review verdict, consumed repair cycles, and remaining blockers; do not duplicate the Goal's outcome or status. Use [execute-unit.md](execute-unit.md) for briefs and results.
 
 Partition work into independently writable and verifiable units. Dispatch ready units within capacity, integrate results in dependency order, and refill the pool on completion. Leave enough budget for integration, review, and delivery; preserve resumable state when stopping.
 

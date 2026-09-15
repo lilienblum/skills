@@ -1,6 +1,6 @@
 ---
 name: gg-guardrails
-description: "Pressure-test a named plan or artifact for needless complexity, hidden risk, and flimsy evidence."
+description: "Pressure-test a plan or artifact"
 license: MIT
 ---
 

@@ -12,9 +12,9 @@ An ordered list suffices for sequential work. When scheduling dependent workers,
 
 Implement directly unless useful parallel work or a specialist need justifies delegation. Use [execute-unit.md](execute-unit.md) for worker briefs and results. Give workers the relevant intent, constraints, source pointers, and bounded write scope rather than the full conversation. The main agent inspects their artifacts and integrates results; worker success reports are not acceptance evidence.
 
-Run checks that exercise the changed behavior, including the integrated outcome. Preserve safety boundaries and fix root causes within scope. Update the plan when evidence changes dependencies or assumptions; investigate further when the goal or environment was misunderstood. Follow the recovery budget in `gg-ship`.
+Run checks that exercise the changed behavior, including the integrated outcome. Preserve safety boundaries and fix root causes within scope. Update the plan when evidence changes dependencies or assumptions; investigate further when the Goal or environment was misunderstood. Follow the recovery budget in `gg-ship`.
 
-For work spanning sessions, keep a compact checkpoint of decisions, completed work, artifact references, remaining work, blockers, and consumed retry and repair counts. This does not require a worker fleet.
+For work spanning sessions, checkpoint only mutable execution state: decisions, artifact identities, remaining work and blockers, and consumed retry and repair counts. Do not duplicate the Goal. This does not require a worker fleet.
 
 ## Review and repair
 
@@ -28,4 +28,4 @@ Fix confirmed blockers and missing evidence within the repair budget. A repair r
 
 Complete the destinations already authorized by the task, such as a local artifact, PR, or deployment. Do not invent publication or notification requirements. Verify external writes when the destination permits readback and verify deployed behavior when relevant to acceptance.
 
-If delivery exposes a defect or changes the artifact, repair and obtain an updated review before claiming completion. Finish with the completion requirements in `gg-ship`.
+If delivery exposes a defect or changes the artifact, repair and obtain an updated review before completing the Goal.
