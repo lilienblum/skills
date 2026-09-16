@@ -5,6 +5,7 @@ Ship substantial changes with review and proof.
 - `gg-ship` — own substantial or high-risk build and ops work under a persistent Goal through verified delivery.
 - `gg-review` — challenge the artifact and call blockers plainly.
 - `gg-guardrails` — cut needless complexity, hidden risk, and flimsy evidence.
+- `gg-handoff` — pass compacted goals and context between agents.
 
 Built on the open [Agent Skills](https://agentskills.io) format.
 
