@@ -20,11 +20,72 @@ For qualifying work, inspect the current Goal before planning. Continue an unfin
 
 The Goal is the persistent completion contract; the plan is mutable execution state. Incorporate later in-scope instructions as amendments. Keep the Goal active while required work remains.
 
-## Workflow
+## Understand and plan
 
-Read [internal/flow.md](internal/flow.md). The main agent owns the plan, integration, and delivery. Delegate only when independent work can usefully run in parallel or a concrete risk needs specialist attention. Use one independent final reviewer when the host supports it; otherwise perform a separate self-review and disclose that limitation.
+Inspect current behavior, repository rules, affected paths, and execution surfaces. Ground the outcome, constraints, and observable acceptance criteria. Resolve material unknowns from evidence, conventions, small experiments, or safe reversible defaults; do not carry assumptions forward as facts.
 
-Load [internal/execute-unit.md](internal/execute-unit.md) only for delegated work. Add [internal/fleet.md](internal/fleet.md) for many independently executable units requiring a rolling worker pool. Duration alone does not require a fleet.
+Use `gg-guardrails` to choose the smallest robust approach and identify relevant safety boundaries. Treat it as guidance, not a separate verdict or report. Write a short plan with the affected components, meaningful dependencies, and checks. Describe data shape, state transitions, compatibility, and failure behavior only where the change affects them.
+
+An ordered list suffices for sequential work. When scheduling dependent workers, record unit IDs, dependencies, write ownership, and acceptance checks. Ensure dependencies exist, have no cycles, and release only ready units; concurrent workers must not share writes. Define a check for the integrated outcome without inventing an extra work unit for it.
+
+## Execute
+
+The main agent owns the plan, integration, and delivery. Delegate only when independent work can usefully run in parallel or a concrete risk needs specialist attention.
+
+When delegating, give workers a self-contained brief rather than the full conversation. The main agent inspects their artifacts and integrates results; worker success reports are not acceptance evidence. For many independently executable units that need a rolling worker pool, use Fleet execution.
+
+Run checks that exercise the changed behavior, including the integrated outcome. Preserve safety boundaries and fix root causes within scope. Update the plan when evidence changes dependencies or assumptions; investigate further when the Goal or environment was misunderstood.
+
+For work spanning sessions, checkpoint only mutable execution state: decisions, artifact identities, remaining work and blockers, and consumed retry and repair counts. Do not duplicate the Goal.
+
+### Delegated work
+
+Skip unless delegating.
+
+Give each worker a self-contained brief with:
+
+- unit ID and bounded goal;
+- allowed writes and relevant constraints;
+- necessary facts and source pointers;
+- acceptance criteria and direct checks;
+- execution and retry budget;
+- output location.
+
+Missing information blocks only when it prevents safe execution. Return that blocker to the main agent rather than asking the user or inferring sibling state. Do not expand the assigned scope.
+
+Inspect the affected path, make the smallest robust change, preserve relevant safety boundaries, and run the required checks. Fix root causes within the assigned scope; return a blocker if the necessary fix crosses it.
+
+Leave the artifact at the agreed location. Return the unit ID, status (`ready`, `failed`, or `blocked`), artifact locator and revision or digest, changed paths, check commands and results, retries used, and material deviations or blockers. Include evidence pointers rather than unsupported success claims.
+
+`ready` means the artifact exists and required local checks pass. It does not mean independently reviewed or accepted. A failed required check means `failed`; missing authority, unsafe ambiguity, or an impossible requirement means `blocked`.
+
+### Fleet execution
+
+Skip unless a rolling worker pool is required. Duration alone does not require a fleet. A long sequential task needs only the Goal and a compact checkpoint, not this machinery.
+
+Keep a durable execution manifest tied to the Goal, with settled decisions and each unit's dependencies, owner, state, retries, artifact identity, and checks. Include the integrated review verdict, consumed repair cycles, and remaining blockers; do not duplicate the Goal's outcome or status. Brief and collect results as in Delegated work.
+
+Partition work into independently writable and verifiable units. Dispatch ready units within capacity, integrate results in dependency order, and refill the pool on completion. Leave enough budget for integration, review, and delivery; preserve resumable state when stopping.
+
+For repeated transformations, validate a representative pilot before scaling out. Choose a capable worker within host policy; use cheaper tiers for matching units only when the pilot demonstrates they can do the work. A pilot is not required for unrelated tasks merely because they run in parallel.
+
+The integrated result still needs `gg-review`. Add unit-level review before integration only when a specific risk would be costly or unsafe to defer. Reuse applicable evidence rather than repeating the same full review at both levels.
+
+Report verified totals and material failed, abandoned, or blocked exceptions, not a worker-by-worker narrative.
+
+## Review and repair
+
+Use `gg-review` once on the integrated result, with one independent reviewer when available. Give the reviewer the goal, acceptance source, governing rules, comparison base, exact artifact identity, diff, and direct evidence. Supply necessary factual context without steering the verdict with worker conclusions.
+
+If only self-review is possible, perform a separate pass against the source and checks; record it as self-review, not isolated or independent review. Record the verdict, reviewed revision, mode, and unresolved findings.
+
+Fix confirmed blockers and missing evidence within the repair budget. A repair requires a current verdict: review the delta and affected behavior, retaining earlier findings and checks only when their continued applicability is established. Expand review when shared dependencies, assumptions, or boundaries changed. Never transfer an old `PASS` to a new revision without this assessment.
+
+## Deliver
+
+Complete the destinations already authorized by the task, such as a local artifact, PR, or deployment. Do not invent publication or notification requirements. Verify external writes when the destination permits readback and verify deployed behavior when relevant to acceptance.
+
+If delivery exposes a defect or changes the artifact, repair and obtain an updated review before completing the Goal.
 
 ## Recovery and user gates
 
