@@ -1,6 +1,6 @@
 ---
 name: gg-guardrails
-description: "Pressure-test a plan or artifact"
+description: "Pressure-test a named plan or artifact for needless complexity, hidden risk, and flimsy evidence."
 license: MIT
 ---
 
@@ -11,6 +11,10 @@ license: MIT
 Apply these guardrails while planning, executing, reviewing, or accepting a consequential change. Judge the proposed system change, not merely the edited lines or an agent's account of them.
 
 When used inside another workflow, apply the relevant criteria in that work and include material findings in its result. Do not add a separate pass, report, or verdict. Use the result format below only for a standalone guardrail assessment.
+
+## On omp
+
+Do not invent a custom agent, fleet, temp-file handoff, or coordinator when `scout`, `task`, `sonic`, `gg-reviewer`, `hub`, `/goal`, `todo`, `ask`, or `/handoff` already cover it. Advisor and WATCHDOG are continuous pressure, not a completion gate. Do not use vibe mode as the ship path.
 
 ## Bind the target
 

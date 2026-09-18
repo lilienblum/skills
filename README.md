@@ -1,40 +1,44 @@
-# gg stack
+# agents
 
-Ship substantial changes with review and proof.
-
-- `gg-ship` — own substantial or high-risk build and ops work under a persistent Goal through verified delivery.
-- `gg-review` — challenge the artifact and call blockers plainly.
-- `gg-guardrails` — cut needless complexity, hidden risk, and flimsy evidence.
-- `gg-handoff` — pass compacted goals and context between agents.
-
-Built on the open [Agent Skills](https://agentskills.io) format.
+Personal [oh-my-pi](https://github.com/oh-my-pi) marketplace: skills, plugins, agents.
 
 ## Install
 
 ```sh
-npx skills add lilienblum/skills
+omp plugin marketplace add lilienblum/agents
+omp plugin install gg@agents
 ```
 
-## When to use gg-ship
+Local checkout, from this repo:
 
-Use `gg-ship` for major features spanning components, migrations, broad refactors, and long-running operational work. A high-risk change can qualify even when the edit is small. Multiple steps alone do not make a task substantial.
-
-Handle light, low-risk fixes and routine edits directly with an appropriate check. They do not need this workflow or its review gate.
-
-## How gg-ship works
-
-For qualifying work, `gg-ship` creates or adopts a persistent Goal before planning. The Goal owns the durable outcome and status; the main agent owns the mutable plan, implementation, integration, and delivery. Delegate when independent work can usefully run in parallel or a concrete risk needs specialist attention.
-
-```mermaid
-flowchart LR
-  qualify["Qualify"] --> goal["Create or adopt Goal"] --> understand["Understand"] --> plan["Plan"] --> execute["Execute"]
-  execute --> review["gg-review"] -->|PASS| deliver["Deliver"]
-  review -->|Repair within budget| execute
-  deliver --> complete["Complete Goal"]
+```sh
+omp plugin marketplace add .
+omp plugin install gg@agents
 ```
 
-One independent reviewer covers correctness, requirements, conventions, and simplicity. If the host cannot provide an independent reviewer, use and disclose a separate self-review. Repairs require an updated verdict, with checks repeated for affected behavior and earlier evidence reused only when it still applies.
+or link the plugin directly:
 
-`gg-guardrails` supplies shared criteria during planning and review without adding another verdict. `gg-review` and `gg-guardrails` also work on their own. Worker briefs and delivery formatting live with the workflows that use them.
+```sh
+omp plugin link ./plugins/gg
+```
 
-Many independent units can add a rolling worker pool with a resumable manifest. Repeated transformations get a representative pilot before scaling. Long sequential work only needs the Goal and a compact execution checkpoint.
+Then `/reload-plugins` (or restart) so skills, commands, and agents load.
+
+## gg
+
+Ship substantial work under a Goal with independent review.
+
+| Surface | What |
+| --- | --- |
+| `/gg-ship` | Own qualifying work through `/goal`, todo, task batch, and a blocking `gg-reviewer` `PASS` |
+| `/gg-review` | Independent review via `gg-reviewer` (`@slow`) |
+| `gg-guardrails` | Shared criteria; not a separate gate |
+| `gg-reviewer` | Read-only agent, `@slow`, strict verdict schema |
+
+Roles (`@plan`, `@task`, `@slow`, `@smol`, `@default`) come from your omp config. This plugin does not pin model ids.
+
+Handoff is omp `/handoff`. Advisor is not the review gate. Vibe is not the ship path.
+
+## Add more
+
+Drop another plugin under `plugins/<name>/` (`skills/`, `agents/`, `commands/`, optional `package.json` with `"omp": {}`) and list it in `.omp-plugin/marketplace.json`.

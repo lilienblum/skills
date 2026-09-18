@@ -1,0 +1,21 @@
+{
+  "name": "agents",
+  "owner": {
+    "name": "lilienblum"
+  },
+  "metadata": {
+    "description": "Personal omp skills, plugins, and agents",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "gg",
+      "description": "Ship substantial omp work under a Goal with independent review",
+      "source": "./gg",
+      "homepage": "https://github.com/lilienblum/agents",
+      "license": "MIT",
+      "category": "development",
+      "tags": ["ship", "review", "guardrails"]
+    }
+  ]
+}
