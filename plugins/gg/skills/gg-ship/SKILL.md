@@ -1,14 +1,14 @@
 ---
 name: gg-ship
-description: "Ship substantial or high-risk omp work under a persistent Goal through verified delivery."
+description: "Ship substantial or high-risk omp work under its native Goal mode through verified delivery."
 license: MIT
 ---
 
 # GG Ship
 
-Own substantial implementation or operational work under a persistent Goal through verified delivery.
+Own substantial implementation or operational work inside omp's native Goal mode through verified delivery.
 
-OMP-only. Roles (`@plan`, `@task`, `@slow`, `@smol`, `@default`) are already mapped — use them, do not hardcode model ids. Do not invent handoff files, fleets, or extra coordinators.
+OMP-only. Do not invent handoff files, fleets, or extra coordinators. Do not hardcode model ids.
 
 ## Scope
 
@@ -18,24 +18,25 @@ Light, low-risk tasks are outside this skill. If invoked for a bounded low-risk 
 
 ## Goal
 
-Inspect the current Goal before planning. Continue an unfinished Goal when it covers the assigned outcome; if none exists, invoke `/goal` with the requested outcome and observable acceptance criteria. Do not replace or repurpose an unrelated unfinished Goal; surface that conflict.
+Use omp's native Goal mode. The user starts it with `/goal Use gg-ship to <outcome>`. `/goal` must be the first command in the prompt; never try to invoke it from skill text.
 
-The Goal is the persistent completion contract. `todo` is mutable execution state. Incorporate later in-scope instructions as amendments. Keep the Goal active while required work remains.
+The native Goal is the persistent completion contract. `todo` is mutable execution state. Incorporate later in-scope instructions as amendments. Keep working while required outcomes remain.
 
 ## Understand and plan
 
 Inspect current behavior, repository rules, affected paths, and execution surfaces. Ground the outcome, constraints, and observable acceptance criteria.
 
-- Unsettled architecture → think as `@plan` (or spawn `scout` for read-only mapping).
-- Known shape → stay on `@task` / `@default`.
+This session stays on whatever model is already selected. Do not try to switch it with `@plan` / `@task` / `@smol` in prose — that does nothing.
+
+Unsettled architecture → spawn `scout` for read-only mapping, then plan here.
 
 Apply `gg-guardrails` as guidance, not a separate verdict. Write a short plan with affected components, meaningful dependencies, and checks. Init `todo`. Describe data shape, state transitions, compatibility, and failure behavior only where the change affects them.
 
-`/prewalk` is optional: plan on the current model, hand off to `@smol` at first edit.
+`/prewalk` is a user/session switch (plan here, `@smol` after first edit). Mention it; do not assume it is on.
 
 ## Execute
 
-The main agent owns the plan, integration, and delivery on `@task` / `@default`. Delegate only when independent work can usefully run in parallel.
+The main agent owns the plan, integration, and delivery on this session's model. Delegate only when independent work can usefully run in parallel. Different models happen by spawning agents (`scout`, `task`, `sonic`, `gg-reviewer`), not by tagging roles in chat.
 
 One `task` batch per fan-out. Required `context` is shared background. Each item is a self-contained brief (files, constraints, acceptance, checks). Follow up with `hub send`; revive parked workers instead of respawning.
 
@@ -78,7 +79,7 @@ If `gg-reviewer` cannot spawn, one separate self-review pass; disclose it. Advis
 
 Complete destinations already authorized by the task. Do not invent publication requirements. Verify external writes when the destination permits readback.
 
-If delivery exposes a defect or changes the artifact, repair and obtain an updated review before completing the Goal.
+If delivery exposes a defect or changes the artifact, repair and obtain an updated review before the Goal completes.
 
 ## Recovery and user gates
 
@@ -86,7 +87,7 @@ Investigate recoverable failures and continue within scope. Inspect current stat
 
 Default: two retries per failed operation, two repair cycles after review. At a limit, report the unresolved failure, attempts, and evidence; do not restart the budget through another worker or renamed step.
 
-`ask` only for unavailable authority, a dangerous or irreversible action, a scope change, contradictory requirements, or a consequential choice without a defensible default.
+Do not use `ask` for recoverable choices or confirmation. Select the safest conventional default and continue. Use `ask` only when unavailable authority or a dangerous irreversible action truly prevents safe progress.
 
 ## Session continuity
 
@@ -96,6 +97,6 @@ Stay in this session. Use `/handoff` when the live context must collapse into a 
 
 Reconcile the delivered result with the Goal and later amendments. Account for every required outcome, including anything blocked or unfinished.
 
-Complete the Goal only after every acceptance criterion has evidence against the delivered artifact, the delivered revision has a current `gg-reviewer` `PASS`, and authorized delivery steps are complete. Disclose self-review when no independent reviewer ran. Unresolved blockers or material evidence gaps prevent completion.
+Do not complete the Goal until every acceptance criterion has evidence against the delivered artifact, the delivered revision has a current `gg-reviewer` `PASS`, and authorized delivery steps are complete. Disclose self-review when no independent reviewer ran. Unresolved blockers or material evidence gaps prevent completion.
 
 Report the outcome, strongest proof, meaningful deviations or risks, and any required user action. Preserve exact identifiers and commands. Keep worker bookkeeping out of the final response.

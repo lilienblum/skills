@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "gg",
-      "description": "Ship substantial omp work under a Goal with independent review",
+      "description": "Ship substantial omp work under a native Goal with independent review",
       "source": "./gg",
       "homepage": "https://github.com/lilienblum/agents",
       "license": "MIT",

@@ -14,7 +14,7 @@ When used inside another workflow, apply the relevant criteria in that work and 
 
 ## On omp
 
-Do not invent a custom agent, fleet, temp-file handoff, or coordinator when `scout`, `task`, `sonic`, `gg-reviewer`, `hub`, `/goal`, `todo`, `ask`, or `/handoff` already cover it. Advisor and WATCHDOG are continuous pressure, not a completion gate. Do not use vibe mode as the ship path.
+Do not invent a custom agent, fleet, temp-file handoff, goal store, or coordinator when `scout`, `task`, `sonic`, `gg-reviewer`, `hub`, `/goal`, `todo`, or `/handoff` already cover it. Advisor and WATCHDOG are continuous pressure, not a completion gate. Do not use vibe mode as the ship path.
 
 ## Bind the target
 
